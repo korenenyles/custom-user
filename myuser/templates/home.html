@@ -4,14 +4,11 @@
 
 
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p>Display Name: {{user.display_name}}</p>
-  <p>AUTH_USER_MODEL: {{auth_user}}</p>
-
+  <h2>Hi <b><u>{{ user.username }}!</b></h2></u>
+  <p>Display Name: <em><b><u>{{user.display_name}}</em></b></u></p>
+  <p>AUTH_USER_MODEL: <u>{{auth_user}}</u></p>
+  <p> That's all for now!!</p>
   <p><a href="{% url 'logout' %}">logout</a></p>
   
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a> |
-  <a href="{% url 'signup' %}">signup</a>
+
 {% endif %}
