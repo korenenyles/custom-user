@@ -2,12 +2,15 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 from myuser.forms import SignUpForm, LoginForm
 from django.contrib.auth import login, logout, authenticate
 from myuser.models import CustomUser
-
+from customuser.settings import AUTH_USER_MODEL
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-def index(request):
-    html = 'index.html'
+@login_required
+def homeView(request):
+    html = 'home.html'
     data = CustomUser.objects.all()
-    return render(request, html, {"data":data})
+
+    return render(request, html, {"data":data, "auth_user": AUTH_USER_MODEL})
 
 
 def signUpView(request):
@@ -19,7 +22,9 @@ def signUpView(request):
             data = form.cleaned_data
             new_user = CustomUser.objects.create_user(
                 username=data['username'],
+                display_name=data['display_name'],
                 password=data['password1'],
+                
                 )
             new_user.save()
             login(request, new_user)
